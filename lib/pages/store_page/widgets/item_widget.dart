@@ -70,19 +70,23 @@ class _TextWidget extends StatelessWidget {
   }
 }
 
-class _AddButton extends StatelessWidget {
+class _AddButton extends ConsumerWidget {
   const _AddButton({
     super.key,
   });
 
+  void _addToCart(WidgetRef ref) {
+    ref.read(rCart.notifier).state++;
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final width = 0.12.toDynamicWidth(context);
     return SizedBox(
       height: width,
       width: width,
       child: IconButton.filled(
-        onPressed: () {},
+        onPressed: () => _addToCart(ref),
         icon: const Icon(Icons.add),
         iconSize: 30,
         style: IconButton.styleFrom(

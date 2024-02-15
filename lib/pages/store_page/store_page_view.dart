@@ -1,5 +1,7 @@
 import 'package:caroby/caroby.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopi/core/riverpod/r_cart.dart';
 
 import '../../widgets/cart_widget.dart';
 

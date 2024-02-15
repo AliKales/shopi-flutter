@@ -39,18 +39,21 @@ class _ImagesSlideState extends State<ImagesSlide> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.maxFinite,
-      height: context.width / 2,
-      child: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _controller,
-        children: [
-          _firstPage(),
-          const _Page(index: 2, text: LocaleKeys.goodProducts),
-          const _Page(index: 3, text: LocaleKeys.goodPrices),
-          _firstPage(),
-        ],
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(12)),
+      child: SizedBox(
+        width: double.maxFinite,
+        height: context.width / 2,
+        child: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _controller,
+          children: [
+            _firstPage(),
+            const _Page(index: 2, text: LocaleKeys.goodProducts),
+            const _Page(index: 3, text: LocaleKeys.goodPrices),
+            _firstPage(),
+          ],
+        ),
       ),
     );
   }
@@ -71,7 +74,6 @@ class _Page extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
         gradient: const LinearGradient(
           colors: [Colors.black, Colors.transparent],
           begin: Alignment.bottomCenter,
