@@ -46,10 +46,12 @@ class _LoadingPageViewState extends State<LoadingPageView>
   }
 
   Future<void> _afterBuild() async {
+    await Future.delayed(1500.toDuration);
     await HHive.init();
     await Auth.init();
 
     if (Auth.isLoggedIn) {
+      await Auth.getMe();
       context.go(PagePaths.main);
     } else {
       context.go(PagePaths.index);

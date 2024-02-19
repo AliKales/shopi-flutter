@@ -1,5 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopi/service/service_user.dart';
 
-final rCart = StateProvider<int>((ref) {
-  return 0;
-});
+final rCart = AsyncNotifierProvider.autoDispose<RCart, List>(
+  RCart.new,
+);
+
+class RCart extends AutoDisposeAsyncNotifier<List> {
+  @override
+  Future<List> build() async {
+    await ServiceUser.getCart();
+    return [];
+  }
+}

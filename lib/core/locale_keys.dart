@@ -13,6 +13,7 @@ abstract class LocaleKeys {
   static const login = "Log In";
   static const loggingIn = "Logging In";
   static const signup = "Sign Up";
+  static const logout = "Log Out";
   static const dontHaveAccount = "You do not have an account yet?";
   static const or = "Or";
   static const loginGoogle = "Log In With Google";
@@ -26,4 +27,10 @@ abstract class LocaleKeys {
   static const goodPrices = "Good Prices";
   static const searchStore = "Search store";
   static const newestStores = "Newest Stores";
+  static const cart = "Cart";
+  static const checkout = "Checkout";
+  static const subTotal = "Sub Total";
+  static const total = "Total";
+  static const shipping = "Shipping";
+  static const myStore = "My Store";
 }

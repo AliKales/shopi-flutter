@@ -1,14 +1,17 @@
 import 'dart:io';
 
+import 'package:caroby/caroby.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopi/pages/auth/login_page/login_page_view.dart';
 import 'package:shopi/pages/auth/signup_page/signup_page_view.dart';
+import 'package:shopi/pages/cart_page/cart_page_view.dart';
 import 'package:shopi/pages/index_page/index_page_view.dart';
 import 'package:shopi/pages/loading_page/loading_page_view.dart';
 import 'package:shopi/pages/main_page/main_page_view.dart';
 import 'package:shopi/pages/store_page/store_page_view.dart';
+import 'package:shopi/service/auth.dart';
 
 abstract class PagePaths {
   PagePaths._();
@@ -18,12 +21,23 @@ abstract class PagePaths {
   static String signup = "/signup";
   static String main = "/main";
   static String loading = "/loading";
-  static String store = "/store";
+  static String store(String name, String linkName) =>
+      "/store?name=$name&linkName=$linkName";
+  static String cart = "/cart";
 }
 
 final appRouter = GoRouter(
   initialLocation: PagePaths.loading,
   redirect: (context, state) {
+    if (!Auth.isLoggedIn &&
+        !state.isAtAny([
+          PagePaths.login,
+          PagePaths.index,
+          PagePaths.signup,
+          PagePaths.loading
+        ])) {
+      return PagePaths.login;
+    }
     return null;
   },
   routes: [
@@ -32,7 +46,14 @@ final appRouter = GoRouter(
     AppRoute(PagePaths.signup, (s) => const SignupPageView()),
     AppRoute(PagePaths.main, (s) => const MainPageView()),
     AppRoute(PagePaths.loading, (s) => const LoadingPageView()),
-    AppRoute(PagePaths.store, (s) => const StorePageView()),
+    AppRoute(
+      PagePaths.store.path,
+      (s) => StorePageView(
+        linkName: s.getParam<String>("linkName") ?? "",
+        name: s.getParam<String>("name") ?? "",
+      ),
+    ),
+    AppRoute(PagePaths.cart, (s) => const CartPageView()),
   ],
 );
 
@@ -95,5 +116,17 @@ extension ExtGoRouterState on GoRouterState {
     }
 
     return p[key];
+  }
+
+  ///[isAt] check if given path is current path
+  bool isAt(String path) {
+    return fullPath?.contains(path) ?? false;
+  }
+
+  ///[isAt] check if given path is current path
+  bool isAtAny(List<String> path) {
+    final i = path
+        .indexWhere((e) => e.contains(fullPath?.replaceFirst("/", "") ?? ""));
+    return i == -1 ? false : true;
   }
 }

@@ -76,7 +76,7 @@ class _AddButton extends ConsumerWidget {
   });
 
   void _addToCart(WidgetRef ref) {
-    ref.read(rCart.notifier).state++;
+    ref.read(rCartCounter.notifier).state++;
   }
 
   @override

@@ -4,9 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:shopi/core/locale_keys.dart';
 import 'package:shopi/pages/main_page/widgets/images_slide.dart';
 import 'package:shopi/router.dart';
+import 'package:shopi/service/auth.dart';
 import 'package:shopi/widgets/buttons.dart';
 import 'package:shopi/widgets/c_text_field.dart';
 import 'package:shopi/widgets/cart_widget.dart';
+
+import '../../widgets/avatar_widget.dart';
 
 part 'widgets/store_widget.dart';
 
@@ -22,6 +25,7 @@ class _MainPageViewState extends State<MainPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
+      drawer: _drawer(),
       body: Padding(
         padding: Values.paddingPage(context),
         child: SingleChildScrollView(
@@ -79,8 +83,45 @@ class _MainPageViewState extends State<MainPageView> {
     );
   }
 
+  Drawer _drawer() {
+    return Drawer(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: 20, vertical: kToolbarHeight * 0.8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AvatarWidget(
+              size: 0.23.toDynamicWidth(context),
+              url:
+                  "https://images.pexels.com/photos/634021/pexels-photo-634021.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            ),
+            Text(
+              Auth.me?.username ?? "",
+              style: context.textTheme.titleLarge!.toBold,
+            ),
+            const Divider(),
+            ListTile(
+              onTap: () {},
+              title: const Text(LocaleKeys.myStore),
+              leading: const Icon(Icons.storefront_outlined),
+            ),
+            const Spacer(),
+            const Divider(),
+            ListTile(
+              onTap: () => Auth.logout(),
+              title: const Text(LocaleKeys.logout),
+              leading: const Icon(Icons.logout),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   AppBar _appBar() {
     return AppBar(
+      centerTitle: true,
       title: const Text(LocaleKeys.appName),
       actions: const [
         CartWidget(),
