@@ -20,7 +20,7 @@ class CartPageView extends ConsumerWidget {
       body: Padding(
         padding: Values.paddingPage(context),
         child: switch (cart) {
-          AsyncData(:final value) => Text('Activity: $value'),
+          AsyncData(:final value) => _body(context),
           AsyncError(:final error) =>
             Text('Oops, something unexpected happened${error.toString()}'),
           _ => const CircularProgressIndicator(),
@@ -33,7 +33,7 @@ class CartPageView extends ConsumerWidget {
     return Column(
       children: [
         ListView.builder(
-          itemCount: 0,
+          itemCount: 5,
           itemBuilder: (context, index) {
             return const _ItemWidget();
           },

@@ -51,7 +51,11 @@ class _LoadingPageViewState extends State<LoadingPageView>
     await Auth.init();
 
     if (Auth.isLoggedIn) {
-      await Auth.getMe();
+      final r = await Auth.getMe();
+      if (!r.isOk) {
+        context.go(PagePaths.index);
+        return;
+      }
       context.go(PagePaths.main);
     } else {
       context.go(PagePaths.index);

@@ -2,6 +2,8 @@ import 'package:caroby/caroby.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shopi/core/locale_keys.dart';
+import 'package:shopi/models/m_store.dart';
+import 'package:shopi/pages/main_page/mixin_main_page.dart';
 import 'package:shopi/pages/main_page/widgets/images_slide.dart';
 import 'package:shopi/router.dart';
 import 'package:shopi/service/auth.dart';
@@ -20,10 +22,11 @@ class MainPageView extends StatefulWidget {
   State<MainPageView> createState() => _MainPageViewState();
 }
 
-class _MainPageViewState extends State<MainPageView> {
+class _MainPageViewState extends State<MainPageView> with MixinMainPage {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: key,
       appBar: _appBar(),
       drawer: _drawer(),
       body: Padding(
@@ -46,6 +49,18 @@ class _MainPageViewState extends State<MainPageView> {
                 style: context.textTheme.displaySmall!.toBold,
               ).left,
               const SizedBox(height: 15),
+              ...List.generate(
+                stores.length,
+                (index) {
+                  MStore s = stores[index];
+                  return _StoreWidget(
+                    name: s.name ?? "",
+                    linkName: s.linkName ?? "",
+                    imageUrl:
+                        "https://images.pexels.com/photos/1233648/pexels-photo-1233648.jpeg?auto=compress&cs=tinysrgb&w=800",
+                  );
+                },
+              ),
               const _StoreWidget(
                 name: "Louis Vuitton",
                 linkName: "louivuitton",
@@ -102,7 +117,7 @@ class _MainPageViewState extends State<MainPageView> {
             ),
             const Divider(),
             ListTile(
-              onTap: () {},
+              onTap: goMyStore,
               title: const Text(LocaleKeys.myStore),
               leading: const Icon(Icons.storefront_outlined),
             ),

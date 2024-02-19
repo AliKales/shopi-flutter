@@ -21,8 +21,8 @@ abstract class PagePaths {
   static String signup = "/signup";
   static String main = "/main";
   static String loading = "/loading";
-  static String store(String name, String linkName) =>
-      "/store?name=$name&linkName=$linkName";
+  static String store({String? name, String? linkName, int? id}) =>
+      "/store?name=$name&linkName=$linkName&id=$id";
   static String cart = "/cart";
 }
 
@@ -51,6 +51,7 @@ final appRouter = GoRouter(
       (s) => StorePageView(
         linkName: s.getParam<String>("linkName") ?? "",
         name: s.getParam<String>("name") ?? "",
+        id: s.getParam<int>("id"),
       ),
     ),
     AppRoute(PagePaths.cart, (s) => const CartPageView()),

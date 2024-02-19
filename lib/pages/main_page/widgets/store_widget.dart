@@ -12,7 +12,7 @@ class _StoreWidget extends StatelessWidget {
   final String imageUrl;
 
   void _go(BuildContext context) {
-    context.push(PagePaths.store(name, linkName));
+    context.push(PagePaths.store(name: name, linkName: linkName));
   }
 
   @override

@@ -33,4 +33,5 @@ abstract class LocaleKeys {
   static const total = "Total";
   static const shipping = "Shipping";
   static const myStore = "My Store";
+  static const createProduct = "Create Product";
 }
